@@ -1,0 +1,9 @@
+# ninja log v5
+0	754	1718085582876836895	CMakeFiles/advanced_programming.dir/objects.cpp.o	ea1c21940554e79a
+754	835	1718085582956836921	advanced_programming	7165213b1086f625
+1	15	1718085260426921045	CMakeFiles/advanced_programming.dir/main.cpp.o	54100eaefbea1ee5
+0	813	1718085223576921771	CMakeFiles/advanced_programming.dir/object_base.cpp.o	d6ab75421dfb6ce1
+0	711	1718085784026811082	CMakeFiles/advanced_programming.dir/objects.cpp.o	ea1c21940554e79a
+711	790	1718085784106811061	advanced_programming	7165213b1086f625
+0	785	1718085969636759690	CMakeFiles/advanced_programming.dir/objects.cpp.o	ea1c21940554e79a
+785	864	1718085969716759658	advanced_programming	7165213b1086f625
