@@ -1,5 +1,7 @@
 #include "objects.hpp"
 
+namespace Object{
+
 bool collides(Circle& obj1, Circle& obj2)
 {
     double distance = (obj1.pos - obj2.pos).norm();
@@ -35,3 +37,5 @@ bool collides(Rectangle& obj1, Rectangle& obj2)
     double dist_y = dy - (obj1.height + obj2.height) / 2;
     return dist_x <= 0 && dist_y <= 0;
 }
+
+} // namespace Object
