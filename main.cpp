@@ -18,7 +18,9 @@ int main(int argc, char** argv){
     {
         cv::Mat frame;
         Camera::getFrame(frame);
+        circle.change_color(Camera::gather_color(frame, circle));
         Display::add_object(frame, circle);
+        rectangle.change_color(Camera::gather_color(frame, rectangle));
         Display::add_object(frame, rectangle);
         window.show(frame);
         if (cv::waitKey(30) >= 0)
