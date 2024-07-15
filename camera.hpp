@@ -11,7 +11,7 @@ namespace Camera{
 
 void initCamera(int camera_id);
 
-cv::Mat getFrame(cv::Mat& frame);
+void getFrame(cv::Mat& frame);
 
 
 } // namespace Camera

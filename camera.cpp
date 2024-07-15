@@ -14,10 +14,8 @@ void initCamera(int camera_id)
     }
 }
 
-cv::Mat getFrame(cv::Mat& frame){
-    cv::Mat frame;
-    cap >> frame;
-    return frame;
+void getFrame(cv::Mat& frame){
+    cap.read(frame);
 }
 
 } // namespace Camera
