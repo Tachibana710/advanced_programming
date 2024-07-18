@@ -30,8 +30,8 @@ public:
     std::string title;
 };
 
-void add_object(cv::Mat& image, Object::Circle& obj);
-void add_object(cv::Mat& image, Object::Rectangle& obj);
+void draw_object(cv::Mat& image, Object::Circle& obj);
+void draw_object(cv::Mat& image, Object::Rectangle& obj);
 
 
 } // namespace Display

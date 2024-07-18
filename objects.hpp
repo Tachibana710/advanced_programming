@@ -12,11 +12,14 @@ namespace Object{
                 pos(Eigen::Vector2d::Zero()),
                 color(Eigen::Vector3d::Zero()) {};
             Eigen::Vector2d pos;
-            Eigen::Vector3d color;
+            Eigen::Vector3d color = Eigen::Vector3d(150, 150, 150);
             void change_color(Eigen::Vector3d new_color)
             {
                 color = new_color;
             }
+            int type = 1;
+            // 0: 可変床
+            // 1: 床
         private:
     };
 

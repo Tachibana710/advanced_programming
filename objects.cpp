@@ -1,5 +1,10 @@
 #include "objects.hpp"
 
+#include <eigen3/Eigen/Core>
+
+#include <pair>
+#include <vector>
+
 namespace Object{
 
 bool collides(Circle& obj1, Circle& obj2)
@@ -36,6 +41,29 @@ bool collides(Rectangle& obj1, Rectangle& obj2)
     double dist_x = dx - (obj1.width + obj2.width) / 2;
     double dist_y = dy - (obj1.height + obj2.height) / 2;
     return dist_x <= 0 && dist_y <= 0;
+}
+
+void decideType(Rectangle& obj){
+    constexpr std::vector<std::pair<int, Eigen::Vector3d>> type_list = {
+        {1, Eigen::Vector3d(150, 150, 150)}, // 床
+        {2, Eigen::Vector3d(0, 0, 255)},
+        {3, Eigen::Vector3d(255, 255, 0)},
+        {4, Eigen::Vector3d(0, 255, 255)},
+        {5, Eigen::Vector3d(255, 0, 255)},
+        {6, Eigen::Vector3d(255, 255, 255)},
+        {7, Eigen::Vector3d(0, 0, 0)},
+    };
+    double diff_norm = 1e9;
+    double tmp_type = 1;
+    for (auto type : type_list){
+        double diff = (obj.color - type.second).norm();
+        if (diff < diff_norm){
+            tmp_type = type.first;
+            diff_norm = diff;
+        }
+    }
+    obj.type = tmp_type;
+    obj.change_color(type_list[tmp_type - 1].second);
 }
 
 } // namespace Object
