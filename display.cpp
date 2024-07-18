@@ -26,6 +26,9 @@ void draw_object(cv::Mat& image, Object::Rectangle& obj)
     //edge
     cv::rectangle(image, cv::Point(obj.pos.x() - obj.width / 2 + 4, obj.pos.y() - obj.height / 2 + 4)
         ,cv::Point(obj.pos.x() + obj.width / 2 - 4, obj.pos.y() + obj.height / 2 - 4), cv::Scalar(200, 200, 200), 2);
+    if (obj.type ==2){
+        return;
+    }
     cv::rectangle(image, cv::Point(obj.pos.x() - obj.width / 2 + 9, obj.pos.y() - obj.height / 2 + 9)
         ,cv::Point(obj.pos.x() + obj.width / 2 - 9, obj.pos.y() + obj.height / 2 - 9), cv::Scalar(obj.color.x(), obj.color.y(), obj.color.z()), -1);
 }

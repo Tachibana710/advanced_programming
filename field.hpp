@@ -20,7 +20,6 @@ namespace Field{
             void clear_rects(){
                 rects.clear();
             }
-        private:
             std::vector<Object::Rectangle> rects;
     };
 

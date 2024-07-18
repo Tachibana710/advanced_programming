@@ -4,6 +4,7 @@
 #include "field.hpp"
 
 cv::Mat takePhoto(Display::Window& window);
+void startTry(Display::Window& window,cv::Mat photo);
 
 int main(int argc, char** argv){
 
@@ -12,18 +13,12 @@ int main(int argc, char** argv){
 
     Display::Window window("Display1");
     cv::Mat photo = takePhoto(window);
+    startTry(window,photo);
     
     return 0;
 }
 
 cv::Mat takePhoto(Display::Window& window){
-    Object::Circle circle(50);
-    circle.pos << 100, 100;
-    circle.color << 255, 0, 0;
-
-    Object::Rectangle rectangle(100, 100);
-    rectangle.pos << 200, 200;
-    rectangle.color << 0, 255, 0;
     cv::Mat frame;
     while (true)
     {
@@ -37,4 +32,32 @@ cv::Mat takePhoto(Display::Window& window){
     }
     Camera::getFrame(frame);
     return frame;
+}
+
+void startTry(Display::Window& window,cv::Mat photo){
+    //背景を白黒に
+    cv::cvtColor(photo, photo, cv::COLOR_BGR2GRAY);
+    cv::Mat temp = photo.clone();
+    // for (int i = 0; i < 100; i++)
+    // {
+    //     cv::medianBlur(photo, photo, 3);
+    // }
+    cv::addWeighted(temp, 0.9, cv::Scalar(255, 255, 255), 0.1, 0, photo);
+    cv::Mat frame = photo;
+    //可変床を確定
+    for (auto& r : Field::field.rects)
+    {
+        Object::decideType(r);
+    }
+    while (true)
+    {
+        frame = photo.clone();
+        Field::field.drawField(frame);
+        window.show(frame);
+        if (cv::waitKey(30) >= 0)
+        {
+            break;
+        }
+    }
+
 }

@@ -2,7 +2,7 @@
 
 #include <eigen3/Eigen/Core>
 
-#include <pair>
+#include <utility>
 #include <vector>
 
 namespace Object{
@@ -44,14 +44,20 @@ bool collides(Rectangle& obj1, Rectangle& obj2)
 }
 
 void decideType(Rectangle& obj){
-    constexpr std::vector<std::pair<int, Eigen::Vector3d>> type_list = {
-        {1, Eigen::Vector3d(150, 150, 150)}, // 床
-        {2, Eigen::Vector3d(0, 0, 255)},
-        {3, Eigen::Vector3d(255, 255, 0)},
-        {4, Eigen::Vector3d(0, 255, 255)},
-        {5, Eigen::Vector3d(255, 0, 255)},
-        {6, Eigen::Vector3d(255, 255, 255)},
-        {7, Eigen::Vector3d(0, 0, 0)},
+    if (obj.type != 0){
+        return;
+    }
+    const std::vector<std::pair<int, Eigen::Vector3d>> type_list = {
+        {0, Eigen::Vector3d(0, 0, 0)}, // 可変床
+        {1, Eigen::Vector3d(10, 10, 10)}, // 床
+        {2, Eigen::Vector3d(255, 255, 255)}, // 白
+        {3, Eigen::Vector3d(0, 0, 255)},
+        {4, Eigen::Vector3d(255, 255, 0)},
+        {5, Eigen::Vector3d(0, 255, 255)},
+        {6, Eigen::Vector3d(255, 0, 255)},
+        {7, Eigen::Vector3d(255, 0, 0)},
+        {8, Eigen::Vector3d(0, 255, 0)},
+
     };
     double diff_norm = 1e9;
     double tmp_type = 1;
@@ -63,7 +69,7 @@ void decideType(Rectangle& obj){
         }
     }
     obj.type = tmp_type;
-    obj.change_color(type_list[tmp_type - 1].second);
+    obj.change_color(type_list[tmp_type].second);
 }
 
 } // namespace Object
