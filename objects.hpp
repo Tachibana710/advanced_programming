@@ -33,8 +33,8 @@ namespace Object{
         {0, Eigen::Vector3d(0, 0, 0)}, // 可変床
         {1, Eigen::Vector3d(10, 10, 10)}, // 床
         {2, Eigen::Vector3d(255, 255, 255)}, // 白
-        // {3, Eigen::Vector3d(50, 50, 200)},
-        // {4, Eigen::Vector3d(200, 200, 50)},
+        {3, Eigen::Vector3d(0, 255, 255)},
+        {4, Eigen::Vector3d(255, 100, 0)},
         // {5, Eigen::Vector3d(50, 200, 200)},
         // {6, Eigen::Vector3d(200, 50, 200)},
         // {7, Eigen::Vector3d(255, 0, 0)},

@@ -67,12 +67,19 @@ void decideType(Rectangle& obj){
 
 bool chara_timeUpdate(Circle& chara, double dt){ //戻り地: 詰み⇢true それ以外⇢false
     // auto& rects = Field::field.rects;
+    bool jump = false;
+    bool back_jump = false;
     std::function<bool(Eigen::Vector2d)> will_colide = [&](Eigen::Vector2d next_vel){
         auto& rects = Field::field.rects;
         Circle next_chara = chara;
         next_chara.pos += dt/1000.0 * next_vel;
         for (auto& r : rects){
             if (collides(r, next_chara) && r.type != 2){
+                if (r.type == 3){
+                    jump = true;
+                }else if (r.type == 4){
+                    back_jump = true;
+                }
                 return true;
             }
         }
@@ -81,11 +88,23 @@ bool chara_timeUpdate(Circle& chara, double dt){ //戻り地: 詰み⇢true そ�
 
     Eigen::Vector2d next_pos = chara.pos;
     Eigen::Vector2d next_vel{200, chara.vel.y() + 30};
+    if (chara.vel.x() == 0 || chara.vel.x() == 200){
+        next_vel.x() = 200;
+    }else if (chara.vel.x() == -200){
+        next_vel.x() = -200;
+    }
     if (will_colide({next_vel.x(), 0})){
         next_vel.x() = 0;
     }
     if (will_colide({0, next_vel.y()})){
         next_vel.y() = 0;
+        next_vel.x() = 200;
+    }
+    if (jump){
+        next_vel.y() = -500;
+    }else if (back_jump){
+        next_vel.y() = -500;
+        next_vel.x() = -200;
     }
     next_pos += dt/1000.0 * next_vel;
 
