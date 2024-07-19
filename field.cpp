@@ -43,7 +43,7 @@ void initField(int stage_id)
         {
             Object::Rectangle rect(100, 100);
             rect.pos << i * 100 + 100, 500;
-            if (i == 3 || i == 6 || i == 7 || i == 9){
+            if (i == 3 || i == 6 || i == 7 || i == 9 || i == 11){
                 rect.type = 0;
             }
             field.add_rect(rect);
@@ -54,6 +54,10 @@ void initField(int stage_id)
         field.add_rect(rect);
         rect.pos << 7 * 100 + 100, 400;
         rect.type = 0;
+        field.add_rect(rect);
+        rect.pos << 8 * 100 + 100, 400;
+        field.add_rect(rect);
+        rect.pos << 9 * 100 + 100, 300;
         field.add_rect(rect);
         field.chara.pos << 100 , 300;
         field.goal.pos << 1000, 400;

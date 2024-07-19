@@ -98,13 +98,11 @@ bool chara_timeUpdate(Circle& chara, double dt){ //戻り地: 詰み⇢true そ�
     }
     if (will_colide({0, next_vel.y()})){
         next_vel.y() = 0;
-        next_vel.x() = 200;
     }
     if (jump){
         next_vel.y() = -500;
     }else if (back_jump){
-        next_vel.y() = -500;
-        next_vel.x() = -200;
+        next_vel.x() *= -1;
     }
     next_pos += dt/1000.0 * next_vel;
 
