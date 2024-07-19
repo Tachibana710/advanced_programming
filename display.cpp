@@ -33,4 +33,12 @@ void draw_object(cv::Mat& image, Object::Rectangle& obj)
         ,cv::Point(obj.pos.x() + obj.width / 2 - 9, obj.pos.y() + obj.height / 2 - 9), cv::Scalar(obj.color.x(), obj.color.y(), obj.color.z()), -1);
 }
 
+void drawGoal(cv::Mat& frame, Object::Rectangle& goal)
+{
+    cv::rectangle(frame, cv::Point(goal.pos.x() - goal.width / 2, goal.pos.y() - goal.height / 2)
+        ,cv::Point(goal.pos.x() + goal.width / 2, goal.pos.y() + goal.height / 2), cv::Scalar(0, 0, 255), 2);
+    cv::rectangle(frame, cv::Point(goal.pos.x() - goal.width / 2 + 5, goal.pos.y() - goal.height / 2 + 5)
+        ,cv::Point(goal.pos.x() + goal.width / 2 - 5, goal.pos.y() + goal.height / 2 - 5), cv::Scalar(0, 0, 255), -1);
+}
+
 } // namespace Display

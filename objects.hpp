@@ -6,6 +6,11 @@
 
 namespace Object{
 
+    inline std::vector<Eigen::Vector2d> st_pos = {
+        {100,300},
+        {200,200},
+    };
+
     class object_base
     {
         public:

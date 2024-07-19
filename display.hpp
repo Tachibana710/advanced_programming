@@ -33,6 +33,8 @@ public:
 void draw_object(cv::Mat& image, Object::Circle& obj);
 void draw_object(cv::Mat& image, Object::Rectangle& obj);
 
+void drawGoal(cv::Mat& frame, Object::Rectangle& goal);
+
 
 } // namespace Display
 

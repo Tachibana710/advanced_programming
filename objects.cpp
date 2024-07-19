@@ -53,11 +53,11 @@ void decideType(Rectangle& obj){
     }
     double diff_norm = 1e9;
     double tmp_type = 1;
-    for (auto type : type_list){
-        double diff = (obj.color - type.second).norm();
-        std::cout << "type:" << type.first << " diff:" << diff << std::endl;
+    for (int i = 1; i < type_list.size(); i++){
+        double diff = (obj.color - type_list[i].second).norm();
+        std::cout << "type:" << type_list[i].first << " diff:" << diff << std::endl;
         if (diff < diff_norm){
-            tmp_type = type.first;
+            tmp_type = type_list[i].first;
             diff_norm = diff;
         }
     }
@@ -92,12 +92,18 @@ bool chara_timeUpdate(Circle& chara, double dt){ //戻り地: 詰み⇢true そ�
     static int stop_count = 0;
     if ((chara.pos - next_pos).norm() < 1e-3){
         stop_count++;
+    }else{
+        stop_count = 0;
     }
-    if (stop_count > 100){
+    if (stop_count > 30){
         return true;
     }
 
-    if (chara.pos.y() > 800){
+    if (chara.pos.y() > 700){
+        return true;
+    }
+
+    if (Field::field.isGoal()){
         return true;
     }
     
