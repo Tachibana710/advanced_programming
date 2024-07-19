@@ -10,6 +10,16 @@ void Field::drawField(cv::Mat& frame)
     {
         Display::draw_object(frame, rect);
     }
+    Display::draw_object(frame, chara);
+}
+
+bool Field::timeUpdate(double dt_ms){
+    // for (auto& rect : rects)
+    // {
+    //     Display::draw_object(frame, rect);
+    // }
+    // Display::draw_object(frame, chara);
+    return Object::chara_timeUpdate(this->chara,dt_ms);
 }
 
 void initField(int stage_id)
@@ -31,6 +41,7 @@ void initField(int stage_id)
         rect.pos << 7 * 100 + 100, 400;
         rect.type = 0;
         field.add_rect(rect);
+        field.chara.pos << 100 , 300;
     }else if (stage_id == 1){
         Object::Rectangle rect5(100, 100);
         rect5.pos << 100, 100;

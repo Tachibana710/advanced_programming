@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <eigen3/Eigen/Core>
+#include <string>
 
 namespace Object{
 
@@ -10,8 +11,10 @@ namespace Object{
         public:
             object_base(){
                 pos = Eigen::Vector2d(0, 0);
+                vel = Eigen::Vector2d(0, 0);
             };
             Eigen::Vector2d pos;
+            Eigen::Vector2d vel;
             Eigen::Vector3d color = Eigen::Vector3d(10, 10, 10);
             void change_color(Eigen::Vector3d new_color)
             {
@@ -25,12 +28,12 @@ namespace Object{
         {0, Eigen::Vector3d(0, 0, 0)}, // 可変床
         {1, Eigen::Vector3d(10, 10, 10)}, // 床
         {2, Eigen::Vector3d(255, 255, 255)}, // 白
-        {3, Eigen::Vector3d(0, 0, 255)},
-        {4, Eigen::Vector3d(255, 255, 0)},
-        {5, Eigen::Vector3d(0, 255, 255)},
-        {6, Eigen::Vector3d(255, 0, 255)},
-        {7, Eigen::Vector3d(255, 0, 0)},
-        {8, Eigen::Vector3d(0, 255, 0)},
+        // {3, Eigen::Vector3d(50, 50, 200)},
+        // {4, Eigen::Vector3d(200, 200, 50)},
+        // {5, Eigen::Vector3d(50, 200, 200)},
+        // {6, Eigen::Vector3d(200, 50, 200)},
+        // {7, Eigen::Vector3d(255, 0, 0)},
+        // {8, Eigen::Vector3d(0, 255, 0)},
     };
 
     class Circle : public object_base
@@ -49,6 +52,8 @@ namespace Object{
             double height;
         private:
     };
+
+    bool chara_timeUpdate(Circle& chara, double dt);
 
     bool collides(Circle& obj1, Circle& obj2);
     bool collides(Circle& obj1, Rectangle& obj2);

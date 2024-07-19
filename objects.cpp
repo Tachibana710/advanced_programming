@@ -1,9 +1,12 @@
 #include "objects.hpp"
+#include "field.hpp"
 
 #include <eigen3/Eigen/Core>
 
 #include <utility>
 #include <vector>
+#include <iostream>
+#include <functional>
 
 namespace Object{
 
@@ -19,7 +22,8 @@ bool collides(Circle& obj1, Rectangle& obj2)
     double dy = std::abs(obj1.pos.y() - obj2.pos.y());
     double dist_x = dx - obj2.width / 2;
     double dist_y = dy - obj2.height / 2;
-    if (dist_x > obj1.radius || dist_y > obj1.radius)
+    // return std::make_pair<bool,bool>(dist_x <= obj1.radius, dist_y <= obj1.radius);
+    if (dist_x > obj1.radius  -5|| dist_y > obj1.radius - 5)
     {
         return false;
     }
@@ -27,7 +31,7 @@ bool collides(Circle& obj1, Rectangle& obj2)
     {
         return true;
     }
-    return dist_x * dist_x + dist_y * dist_y <= obj1.radius * obj1.radius;
+    return dist_x * dist_x + dist_y * dist_y <= (obj1.radius - 5) * (obj1.radius - 5);
 }
 
 bool collides(Rectangle& obj1, Circle& obj2)
@@ -47,22 +51,11 @@ void decideType(Rectangle& obj){
     if (obj.type != 0){
         return;
     }
-    const std::vector<std::pair<int, Eigen::Vector3d>> type_list = {
-        {0, Eigen::Vector3d(0, 0, 0)}, // 可変床
-        {1, Eigen::Vector3d(10, 10, 10)}, // 床
-        {2, Eigen::Vector3d(255, 255, 255)}, // 白
-        {3, Eigen::Vector3d(0, 0, 255)},
-        {4, Eigen::Vector3d(255, 255, 0)},
-        {5, Eigen::Vector3d(0, 255, 255)},
-        {6, Eigen::Vector3d(255, 0, 255)},
-        {7, Eigen::Vector3d(255, 0, 0)},
-        {8, Eigen::Vector3d(0, 255, 0)},
-
-    };
     double diff_norm = 1e9;
     double tmp_type = 1;
     for (auto type : type_list){
         double diff = (obj.color - type.second).norm();
+        std::cout << "type:" << type.first << " diff:" << diff << std::endl;
         if (diff < diff_norm){
             tmp_type = type.first;
             diff_norm = diff;
@@ -70,6 +63,47 @@ void decideType(Rectangle& obj){
     }
     obj.type = tmp_type;
     obj.change_color(type_list[tmp_type].second);
+}
+
+bool chara_timeUpdate(Circle& chara, double dt){ //戻り地: 詰み⇢true それ以外⇢false
+    // auto& rects = Field::field.rects;
+    std::function<bool(Eigen::Vector2d)> will_colide = [&](Eigen::Vector2d next_vel){
+        auto& rects = Field::field.rects;
+        Circle next_chara = chara;
+        next_chara.pos += dt/1000.0 * next_vel;
+        for (auto& r : rects){
+            if (collides(r, next_chara) && r.type != 2){
+                return true;
+            }
+        }
+        return false;
+    };
+
+    Eigen::Vector2d next_pos = chara.pos;
+    Eigen::Vector2d next_vel{200, chara.vel.y() + 30};
+    if (will_colide({next_vel.x(), 0})){
+        next_vel.x() = 0;
+    }
+    if (will_colide({0, next_vel.y()})){
+        next_vel.y() = 0;
+    }
+    next_pos += dt/1000.0 * next_vel;
+
+    static int stop_count = 0;
+    if ((chara.pos - next_pos).norm() < 1e-3){
+        stop_count++;
+    }
+    if (stop_count > 100){
+        return true;
+    }
+
+    if (chara.pos.y() > 800){
+        return true;
+    }
+    
+    chara.pos = next_pos;
+    chara.vel = next_vel;
+    return false;
 }
 
 } // namespace Object
